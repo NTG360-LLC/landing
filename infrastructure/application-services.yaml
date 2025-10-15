@@ -1,0 +1,128 @@
+# All 32 Application Services with LoadBalancer IPs
+apiVersion: v1
+kind: Service
+metadata:
+  name: automatiq-prod-lb
+  namespace: ntg360
+  annotations:
+    metallb.universe.tf/address-pool: ntg30-public-pool
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.30.0.110
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: automatiq-prod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: automatiq-test-lb
+  namespace: ntg360
+  annotations:
+    metallb.universe.tf/address-pool: ntg30-public-pool
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.30.0.111
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: automatiq-test
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: automatiq-stg-lb
+  namespace: ntg360
+  annotations:
+    metallb.universe.tf/address-pool: ntg30-public-pool
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.30.0.112
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: automatiq-stg
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: automatiq-dev-lb
+  namespace: ntg360
+  annotations:
+    metallb.universe.tf/address-pool: ntg30-public-pool
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.30.0.113
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: automatiq-dev
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: axis-prod-lb
+  namespace: ntg360
+  annotations:
+    metallb.universe.tf/address-pool: ntg30-public-pool
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.30.0.200
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: axis-prod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: axis-test-lb
+  namespace: ntg360
+  annotations:
+    metallb.universe.tf/address-pool: ntg30-public-pool
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.30.0.201
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: axis-test
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: axis-stg-lb
+  namespace: ntg360
+  annotations:
+    metallb.universe.tf/address-pool: ntg30-public-pool
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.30.0.202
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: axis-stg
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: axis-dev-lb
+  namespace: ntg360
+  annotations:
+    metallb.universe.tf/address-pool: ntg30-public-pool
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.30.0.203
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: axis-dev

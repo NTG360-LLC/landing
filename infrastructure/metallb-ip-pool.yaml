@@ -1,0 +1,19 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: ntg30-public-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 10.30.0.2-10.30.0.19
+    - 10.30.0.100-10.30.0.153
+    - 10.30.0.200-10.30.0.213
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: ntg30-public-l2
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - ntg30-public-pool

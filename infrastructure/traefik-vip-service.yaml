@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-web
+  namespace: ntg360
+  annotations:
+    metallb.universe.tf/address-pool: ntg30-public-pool
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 10.30.0.2
+  selector:
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/instance: traefik-web
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8000
+    - name: websecure
+      port: 443
+      targetPort: 8443

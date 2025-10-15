@@ -1,0 +1,104 @@
+# Main Landing Page IngressRoutes
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: landing-main-http
+  namespace: ntg360
+spec:
+  entryPoints: [web]
+  routes:
+  - match: Host(`app.ntg360.com`)
+    kind: Rule
+    middlewares:
+    - name: global-https-redirect
+    services:
+    - name: noop-svc
+      port: 65535
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: landing-main-https
+  namespace: ntg360
+spec:
+  entryPoints: [websecure]
+  routes:
+  - match: Host(`app.ntg360.com`)
+    kind: Rule
+    middlewares:
+    - name: global-secure-headers
+    services:
+    - name: landing-prod-service
+      port: 8080
+  tls:
+    certResolver: cloudflare-resolver
+---
+# Development Environment
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: landing-dev-https
+  namespace: ntg360
+spec:
+  entryPoints: [websecure]
+  routes:
+  - match: Host(`app-dev.ntg360.com`)
+    kind: Rule
+    middlewares:
+    - name: global-secure-headers
+    services:
+    - name: landing-dev-service
+      port: 8080
+  tls:
+    certResolver: cloudflare-resolver
+---
+# Test Environment
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: landing-test-https
+  namespace: ntg360
+spec:
+  entryPoints: [websecure]
+  routes:
+  - match: Host(`app-test.ntg360.com`)
+    kind: Rule
+    middlewares:
+    - name: global-secure-headers
+    services:
+    - name: landing-test-service
+      port: 8080
+  tls:
+    certResolver: cloudflare-resolver
+---
+# Staging Environment
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: landing-staging-https
+  namespace: ntg360
+spec:
+  entryPoints: [websecure]
+  routes:
+  - match: Host(`app-stg.ntg360.com`)
+    kind: Rule
+    middlewares:
+    - name: global-secure-headers
+    services:
+    - name: landing-staging-service
+      port: 8080
+  tls:
+    certResolver: cloudflare-resolver
+---
+# Noop service for HTTP redirects
+apiVersion: v1
+kind: Service
+metadata:
+  name: noop-svc
+  namespace: ntg360
+spec:
+  clusterIP: None
+  ports:
+  - name: noop
+    port: 65535
+    targetPort: 65535
